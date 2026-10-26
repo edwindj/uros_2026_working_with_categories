@@ -1,0 +1,134 @@
+\documentclass[aspectratio=1610]{beamer}
+% Met aspectratio kan je de breedte-hoogteverhouding aanpassen (bijv 1610 = de 
+% monitoren op het CBS); 43 is de klassieke verhouding die veel beamers nog
+% gebruiken.
+
+\usetheme{cbs}
+
+\title{Een test presentatie met een lange titel zodat hij over meerdere regels loopt}
+\subtitle{Een ondertitel}
+\author{Jan Janssen\\Piet Pietsersen}
+\date{April 2018}
+
+% De institute komt in de voet van de slides naast het nummer; normaal zou hier
+% niets moeten staan, maar je kan dit dus misbruiken om iets in de voet van
+% de slides te krijgen (bijv datum/naam event)
+\institute{}
+
+\begin{document}
+
+\begin{frame}[plain]
+  \titlepage
+\end{frame}
+
+{ %\usebackgroundtemplate{\includegraphics[width=\paperwidth,height=\paperheight]{images/zeilboten.jpg}}
+\begin{frame}
+  \vspace*{-4cm}
+  \Large\rm\bfseries A slide with a\\ background\\ image
+\end{frame} }
+
+
+% You can also have a background image on the title page; however, you will need
+% to play around with the colors of the image and titles etc. 
+% You could use for example
+% \title{\color{roze_licht}The title}
+% in the preample. The template (beamerthemecbs.sty) contains a list of colours.
+{ %\usebackgroundtemplate{\includegraphics[width=\paperwidth,height=\paperheight]{images/zeilboten.jpg}}
+\begin{frame}
+  \titlepage
+\end{frame} }
+
+\begin{frame}
+  \frametitle{A block of text}
+  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam ac elementum
+  eros, vel posuere nunc. Fusce nunc lorem, bibendum a sodales eu, sollicitudin
+  ac eros. Suspendisse varius, lorem vel laoreet viverra, dui mauris dictum
+  eros, feugiat posuere libero quam ut diam. 
+
+  In hac habitasse platea dictumst.
+  Nulla facilisi. Morbi in magna auctor, tincidunt neque nec, venenatis turpis.
+  Morbi eget arcu vel nibh luctus vulputate. Nullam id vestibulum dui, at congue
+  ligula. Integer eu lacus in libero semper aliquet eu eget dui.
+\end{frame}
+
+\begin{frame}
+  \frametitle{A list}
+  \begin{itemize}
+    \item Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+    \item Sed tincidunt nibh id sollicitudin condimentum.
+    \begin{itemize}
+      \item Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+      \item Sed tincidunt nibh id sollicitudin condimentum.
+    \end{itemize}
+    \item Nulla ut leo blandit, dapibus nibh sed, consequat sem.
+    \item Morbi commodo metus at ornare luctus.
+    \item Phasellus ut erat id metus auctor ultrices ut in metus.
+    \item Sed a eros quis turpis iaculis semper.
+  \end{itemize}
+\end{frame}
+
+\invert
+
+\begin{frame}
+  \frametitle{En uiteindelijk nog een vergelijking en een lange titel die over meerdere regels loopt}
+  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+  \begin{equation}
+    f(x) = \frac{1}{\sqrt{2\pi}\sigma}\exp\left(-\frac{(x - \mu)^2}{2\sigma^2}\right)
+  \end{equation}
+\end{frame}
+
+
+\begin{frame}
+  \frametitle{A list}
+  \begin{enumerate}
+    \item Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+    \item Sed tincidunt nibh id sollicitudin condimentum.
+    \begin{enumerate}
+      \item Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+      \item Sed tincidunt nibh id sollicitudin condimentum.
+    \end{enumerate}
+    \item Nulla ut leo blandit, dapibus nibh sed, consequat sem.
+    \item Morbi commodo metus at ornare luctus.
+    \item Phasellus ut erat id metus auctor ultrices ut in metus.
+    \item Sed a eros quis turpis iaculis semper.
+  \end{enumerate}
+\end{frame}
+\revert
+
+\begin{frame}[fragile]{Voorbeeldslide met code}
+  \begin{verbatim}
+  #include <iostream>
+  #include <iomanip>
+
+  int main(int argc, char** argv) {
+    std::cout << "Hello, world!" << std::endl;
+    return 0;
+  }
+  \end{verbatim}
+\end{frame}
+
+\begin{frame}{Void cat}
+  \centering
+  %\includegraphics[width=0.6\textwidth]{images/voidcat.jpg}
+\end{frame}
+
+
+\invert
+\begin{frame}
+  \frametitle{A block of text}
+  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam ac elementum
+  eros, vel posuere nunc. Fusce nunc lorem, bibendum a sodales eu, sollicitudin
+  ac eros. Suspendisse varius, lorem vel laoreet viverra, dui mauris dictum
+  eros, feugiat posuere libero quam ut diam. In hac habitasse platea dictumst.
+  Nulla facilisi. Morbi in magna auctor, tincidunt neque nec, venenatis turpis.
+  Morbi eget arcu vel nibh luctus vulputate. Nullam id vestibulum dui, at congue
+  ligula. Integer eu lacus in libero semper aliquet eu eget dui.
+\end{frame}
+
+\revert
+
+\begin{frame}[plain]
+\end{frame}
+
+\end{document}
+

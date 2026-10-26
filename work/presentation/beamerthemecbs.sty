@@ -1,0 +1,192 @@
+\mode<presentation>
+% Nodig om math fonts te laten werken
+\usefonttheme{professionalfonts}
+
+\usepackage{tikz}
+\usetikzlibrary{positioning}
+
+% ==== Definieer de CBS kleuren ====
+\RequirePackage{xcolor}
+% hoofdkleuren
+\definecolor{corporateblauw}{RGB}{39,29,108}
+\definecolor{corporatelichtblauw}{RGB}{0,161,205}
+\definecolor{lichtgrijs}{RGB}{236,236,236}
+% aanvullende kleuren
+\definecolor{grijs_licht}{HTML}{E9E9E9}
+\definecolor{grijs_midden}{HTML}{BDBCBC}
+\definecolor{grijs_donker}{HTML}{878787}
+\definecolor{webtext}{HTML}{091D23}
+\definecolor{oranje_licht}{HTML}{F39200}
+\definecolor{oranje_midden}{HTML}{DA5914}
+\definecolor{oranje_donker}{HTML}{9B430D}
+\definecolor{rood_licht}{HTML}{E52329}
+\definecolor{rood_midden}{HTML}{C90C0F}
+\definecolor{rood_donker}{HTML}{9C1006}
+\definecolor{roze_licht}{HTML}{D9328A}
+\definecolor{roze_midden}{HTML}{AF0E80}
+\definecolor{roze_donker}{HTML}{82045E}
+\definecolor{paars_licht}{HTML}{9373B1}
+\definecolor{paars_midden}{HTML}{7D4791}
+\definecolor{paars_donker}{HTML}{56217A}
+\definecolor{aqua_licht}{HTML}{00A1CD}
+\definecolor{aqua_midden}{HTML}{0580A1}
+\definecolor{aqua_donker}{HTML}{005470}
+\definecolor{blauw_licht}{HTML}{2581C4}
+\definecolor{blauw_midden}{HTML}{0058B8}
+\definecolor{blauw_donker}{HTML}{163A72}
+\definecolor{lime_licht}{HTML}{AFCB05}
+\definecolor{lime_midden}{HTML}{899D0C}
+\definecolor{lime_donker}{HTML}{717D26}
+\definecolor{groen_licht}{HTML}{86BD40}
+\definecolor{groen_midden}{HTML}{53A31D}
+\definecolor{groen_donker}{HTML}{488225}
+
+% ==== Kleuren schema ====
+\colorlet{cbs1}{corporatelichtblauw}
+\colorlet{cbs2}{corporateblauw}
+
+\colorlet{cbsbasis}{cbs1}
+\colorlet{cbstekst}{cbs2}
+\colorlet{cbsachtergrond}{white}
+
+\newcommand{\invert}{
+  \colorlet{cbsbasis}{white}
+  \colorlet{cbstekst}{white}
+  \colorlet{cbsachtergrond}{cbs1}
+  \usebeamercolor[fg]{normal text}
+}
+\newcommand{\revert}{
+  \colorlet{cbsbasis}{cbs1}
+  \colorlet{cbstekst}{cbs2}
+  \colorlet{cbsachtergrond}{white}
+  \usebeamercolor[fg]{normal text}
+}
+
+
+% ==== Stel de fonts in ==== 
+
+% Maak het document op in Corbel met Cambria voor headings; Cambria is te 
+% benaderen met \serif
+\RequirePackage{fontspec}
+
+\setmainfont[
+    Path = "./templatefiles/", 
+    Extension=.otf,
+    UprightFont=*-Regular,
+    BoldFont=*-Bold,
+    ItalicFont=*-Italic
+  ]{SohoPro}
+% De sansfont is uiteindelijk het hoofdfont voor de slides
+\setsansfont[
+    Path = "./templatefiles/", 
+    Extension=.otf,
+    UprightFont=*-Light,
+    BoldFont=*-Medium,
+    ItalicFont=*-LightItalic
+  ]{AkkoPro}
+\setmonofont[
+    Path = "./templatefiles/", 
+    Extension=.ttf,
+    UprightFont=consola,
+    BoldFont=*b,
+    ItalicFont=*i,
+    BoldItalicFont=*z,
+    Scale=MatchLowercase
+  ]{consola}
+%% Math
+% Issue with quarto: \RequirePackage[bold-style=ISO]{unicode-math}
+\RequirePackage{unicode-math}
+\setmathfont[Path = "./templatefiles/"]{cambria.ttc}
+
+\linespread{1.2}
+\setlength{\parskip}{\baselineskip}
+
+% ==== Lijsten ====
+\setbeamercolor{enumerate item}{fg=cbstekst}
+\setbeamercolor{enumerate subitem}{fg=cbstekst}
+\setbeamercolor{enumerate subsubitem}{fg=cbstekst}
+\setbeamertemplate{enumerate items}[default]
+\setbeamertemplate{enumerate subitem}{\insertsubenumlabel}
+\setbeamertemplate{enumerate subsubitem}{\insertsubsubenumlabel}
+
+\setbeamercolor{itemize item}{fg=cbstekst}
+\setbeamercolor{itemize subitem}{fg=cbstekst}
+\setbeamercolor{itemize subsubitem}{fg=cbstekst}
+\setbeamertemplate{itemize item}{—}
+\setbeamertemplate{itemize subitem}{—}
+\setbeamertemplate{itemize subsubitem}{—}
+
+%\colorlet{cbsachtergrond}{corporatelichtblauw}
+%\colorlet{cbstekst}{white}
+%\colorlet{cbsbasis}{white}
+%\color{white}
+%\setbeamercolor{normal text}{fg=white}
+\setbeamercolor{itemize/enumerate body begin}{fg=white}
+
+
+% ==== Kleurtjes rondom slides ==== 
+%\setbeamercolor{sidebar}{bg=cbsbasis}
+%\setbeamersize{sidebar width right=0.4cm}
+\setbeamercolor{background canvas}{bg=cbsachtergrond}
+\setbeamertemplate{navigation symbols}{}
+\setbeamercolor{normal text}{fg=cbstekst}
+
+% ==== Slide titel ====
+\setbeamercolor{frametitle}{fg=cbsbasis, bg=cbsachtergrond}
+\setbeamertemplate{frametitle}{%
+  \vskip8mm
+  \rm\Large\bfseries\insertframetitle
+  %\bfseries\LARGE\insertframetitle
+}
+
+% ==== Slide voet ====
+\setbeamercolor{footline}{bg=cbsachtergrond, fg=cbstekst}
+
+\setbeamertemplate{footline}{
+  % we willen alles rechts hebben
+  \hfill
+  % voeg framenumber toe; til 4 mm op zodat hij niet op de onderlijn staat
+  \raisebox{4mm}{\scriptsize\insertinstitute\hspace{2em}\insertframenumber}
+  % Voeg op het eind nog wat space toe zodat nummer niet helemaal rechts
+  % staat, maar iets naar links komt; onder logo
+  \hspace{7mm}
+  % voeg blauwe balk rechts met logo toe
+  \begin{tikzpicture}[remember picture, overlay]
+    % logo
+    \node[rounded corners=1mm, fill=white, inner sep=1mm, outer sep=0mm, 
+        anchor=south east, text ragged, shift={(0cm, 1cm)}] at (current page.south east) {
+      \noindent\hspace*{1mm}\includegraphics[height=7.5mm]{templatefiles/cbs.pdf}\hspace*{6mm}
+    };
+    % balk
+    \node[shift={(-4mm,0)}] at (current page.south east) { 
+      \begin{tikzpicture}[remember picture, overlay]
+        \draw[cbsbasis, fill=cbsbasis] (0,0) rectangle (4mm, \paperheight);
+      \end{tikzpicture}
+    };
+  \end{tikzpicture}
+}
+
+% ==== Titelpagina ====
+
+\setbeamertemplate{title page}{%
+  \setlength{\parskip}{0pt}
+  % voeg blauwe balk rechts toe
+  \begin{tikzpicture}[remember picture, overlay]
+    \node[shift={(-4mm,0)}] at (current page.south east) { 
+      \begin{tikzpicture}[remember picture, overlay]
+        \draw[cbsbasis, fill=cbsbasis] (0,0) rectangle (4mm, \paperheight);
+      \end{tikzpicture}
+    };
+  \end{tikzpicture}
+  % logo
+  \includegraphics[height=25mm]{templatefiles/cbs.pdf}\par
+  % titel
+  \vspace{1em}\LARGE\rm\bfseries\color{cbstekst}\inserttitle\par
+  % subtitel
+  \vspace{\stretch{1}}\Large\rm\bfseries\color{cbsbasis}\insertsubtitle\par
+  % auteur
+  \vspace{\stretch{1}}\footnotesize\rm\color{cbstekst}\insertauthor\par
+  % datum
+  \vspace{0.5em}\footnotesize\rm\insertdate\par
+}
+
