@@ -1,0 +1,30 @@
+code,label,parent
+0,"Early childhood education",
+01,"Early childhood educational development",0
+02,"Pre-primary education",0
+1,"Primary education",
+10,"Primary education",1
+2,"Lower secondary education",
+24,"General",2
+25,"Professional",2
+3,"Upper secondary education",
+34,"General",3
+35,"Professional",3
+4,"Post-secondary non-tertiary education",
+44,"General",4
+45,"Professional",4
+5,"Short-cycle tertiary education",
+54,"General",5
+55,"Professional",5
+6,"Bachelor's or equivalent level",
+64,"Academic",6
+65,"Professional",6
+66,"Orientation unspecified",6
+7,"Master's or equivalent level",
+74,"Academic",7
+75,"Professional",7
+76,"Orientation unspecified",7
+8,"Doctoral or equivalent level",
+84,"Academic",8
+85,"Professional",8
+86,"Orientation unspecified",8
