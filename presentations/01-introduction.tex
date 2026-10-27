@@ -1,0 +1,164 @@
+\documentclass[aspectratio=1610]{beamer}
+% Met aspectratio kan je de breedte-hoogteverhouding aanpassen (bijv 1610 = de 
+% monitoren op het CBS); 43 is de klassieke verhouding die veel beamers nog
+% gebruiken.
+
+\usetheme{cbs}
+
+\title{Working with categorical data and \\code lists in R}
+%\subtitle{Een ondertitel}
+\author{Jan van der Laan (CBS) \url{<dj.vanderlaan@cbs.nl>}\\Edwin de Jonge (CBS) \url{<e.dejonge@cbs.nl>}}
+\date{November 2026}
+
+% De institute komt in de voet van de slides naast het nummer; normaal zou hier
+% niets moeten staan, maar je kan dit dus misbruiken om iets in de voet van
+% de slides te krijgen (bijv datum/naam event)
+\institute{uRos November 2026}
+
+\usepackage{booktabs}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}
+  \frametitle{Categorical variable}
+  \begin{itemize}
+    \item Can take only a fixed number of possible values.
+    \begin{description}
+      \item[Educational level] Low, Middle, High
+      \item[Employment status] Student, Working, Unemployed, Pensioned
+      \item[Diabetes status] `Has diabetes, `Does not have diabetes'
+    \end{description}
+    \item In computer science (and some programming languages) called an \emph{enum} or 
+      \textit{enumeration type}. 
+    \item The possible values are called \emph{levels}.
+    \item Important for official statistics as these define the
+      (sub)populations for which the statistics are calculated.
+    \item Often the possible values are from a \emph{code list}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Code list}
+  \begin{itemize}
+    \item Lists the possible \emph{levels} of a \emph{categorical} variable
+    \item Each level has a \emph{code} and usually an descriptive \emph{label}
+    \item Sometimes also description, hierarchy
+    \item Datasets often use the \emph{codes}.
+      \begin{itemize}
+        \item More compact.
+        \item Labels change more often and might be language dependent.
+      \end{itemize}
+    \item \emph{Labels} are used for presentation.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Code list}
+  \begin{center}
+  \textbf{International Standard Classification of Education}
+  \begin{tabular}{ll}
+    \toprule
+    Code & Label \\
+    \midrule
+    0 &EARLY CHILDHOOD EDUCATION \\
+    1 &PRIMARY EDUCATION \\
+    2 &LOWER SECONDARY EDUCATION \\
+    3 &UPPER SECONDARY EDUCATION \\
+    4 &POST-SECONDARY NON-TERTIARY EDUCATION \\
+    5 &SHORT-CYCLE TERTIARY EDUCATION \\
+    6 &BACHELOR'S OR EQUIVALENT LEVEL \\
+    7 &MASTER'S OR EQUIVALENT LEVEL \\
+    8 &DOCTORAL OR EQUIVALENT LEVEL \\
+    \bottomrule
+  \end{tabular}
+  \end{center}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Hierarchical code list}
+  \begin{center}
+  \textbf{International Standard Classification of Education}
+  \begin{tabular}{lll}
+    \toprule
+    \multicolumn{2}{l}{Code} & Label \\
+    \midrule
+    0 &   &EARLY CHILDHOOD EDUCATION \\
+      &01 &Early childhood educational development \\
+      &02 &Pre-primary education \\
+    1 &   &PRIMARY EDUCATION \\
+      &10 &Primary education \\
+    2 &   &LOWER SECONDARY EDUCATION \\
+      &24 &General \\
+      &25 &Professional \\
+    3 &   &UPPER SECONDARY EDUCATION \\
+    $\vdots$ &&$\vdots$\\
+    \bottomrule
+  \end{tabular}
+  \end{center}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Hierarchical code list}
+  \begin{center}
+  \textbf{International Standard Classification of Education}
+  \begin{tabular}{lll}
+    \toprule
+    Code & Label & Parent\\
+    \midrule
+    0  &EARLY CHILDHOOD EDUCATION & -\\
+    01 &Early childhood educational development & 0\\
+    02 &Pre-primary education & 0\\
+    1  &PRIMARY EDUCATION & 1\\
+    10 &Primary education & 1\\
+    2  &LOWER SECONDARY EDUCATION & -\\
+    24 &General & 2\\
+    25 &Professional & 2\\
+    3  &UPPER SECONDARY EDUCATION & -\\
+    $\vdots$ &$\vdots$ & $\vdots$\\
+    \bottomrule
+  \end{tabular}
+  \end{center}
+\end{frame}
+
+\invert
+\begin{frame}
+  \frametitle{Programme}
+  \begin{enumerate}
+    \item Base R: \texttt{factor}
+    \item \texttt{haven}
+    \item \texttt{forecats}
+    \item \texttt{codelist}
+  \end{enumerate}
+  Each time: demo + small assignment
+\end{frame}
+\revert
+
+
+%\begin{frame}[fragile]{Voorbeeldslide met code}
+%  \begin{verbatim}
+%  #include <iostream>
+%  #include <iomanip>
+%
+%  int main(int argc, char** argv) {
+%    std::cout << "Hello, world!" << std::endl;
+%    return 0;
+%  }
+%  \end{verbatim}
+%\end{frame}
+
+%\begin{frame}{Void cat}
+%  \centering
+%  %\includegraphics[width=0.6\textwidth]{images/voidcat.jpg}
+%\end{frame}
+
+
+
+\begin{frame}[plain]
+\end{frame}
+
+\end{document}
+
