@@ -39,12 +39,14 @@ codes2 <- labels2$code
 labels2 <- paste0(labels2$label.y, " - ", labels2$label.x)
 names(codes2) <- labels2
 
-dta$educational_level1 <- labelled(dta$educational_level1, 
-  labels = codes1)
+dta$educational_level1[is.na(dta$educational_level1)] <- "99"
+dta$educational_level1 <- labelled_spss(dta$educational_level1, 
+  labels = codes1, na_values = "99")
 
-dta$educational_level2 <- labelled(dta$educational_level2, 
-  labels = codes2)
+dta$educational_level2[is.na(dta$educational_level2)] <- "99"
+dta$educational_level2 <- labelled_spss(dta$educational_level2, 
+  labels = codes2, na_values = "99")
 
 write_sav(dta, "demodata.sav")
 
-tmp <- read_sav("demodata.sav")
+#tmp <- read_sav("demodata.sav")
