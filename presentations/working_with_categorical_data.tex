@@ -6,7 +6,7 @@
 \usetheme{cbs}
 
 \title{Working with categorical data and \\code lists in R}
-%\subtitle{Een ondertitel}
+\subtitle{Workshop at the uROS 2026}
 \author{Jan van der Laan (CBS) \url{<dj.vanderlaan@cbs.nl>}\\Edwin de Jonge (CBS) \url{<e.dejonge@cbs.nl>}}
 \date{November 2026}
 
@@ -18,6 +18,7 @@
 \usepackage{booktabs}
 
 \begin{document}
+
 
 \begin{frame}
   \titlepage
@@ -128,6 +129,7 @@
 \begin{frame}
   \frametitle{Programme}
   \begin{enumerate}
+    \item Setting up
     \item Base R: \texttt{factor}
     \item \texttt{haven}
     \item \texttt{forecats}
@@ -135,7 +137,39 @@
   \end{enumerate}
   Each time: demo + small assignment
 \end{frame}
+\revert
 
+\invert
+\begin{frame}
+  \vspace*{\stretch{1}} \LARGE \textbf{Setting up}
+  \vspace*{\stretch{1}} \par
+\end{frame}
+\revert
+
+\begin{frame}
+  \frametitle{Setting up}
+  \begin{columns}
+    \begin{column}{0.5\textwidth}
+      \begin{itemize}
+        \item Material can be found at $\rightarrow$
+        \item Following packages needed:
+          \begin{itemize}
+            \item \texttt{haven}
+            \item \texttt{forecats}
+            \item \texttt{codelist}
+          \end{itemize}
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+      \includegraphics[width=0.6\textwidth]{images/qrcode.png}
+      \tiny
+      \url{https://codeberg.org/CBS-ResearchAndDevelopment/uRos-2026-Workshop-WorkingWithCategoricalDataAndCodeLists}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+
+\invert
 \begin{frame}
   \vspace*{\stretch{1}} \LARGE \textbf{factor}
   \vspace*{\stretch{1}} \par
@@ -161,6 +195,53 @@
   \vspace*{\stretch{1}} \par
 \end{frame}
 \revert
+
+\begin{frame}
+  \frametitle{Demo}
+\end{frame}
+
+\invert
+\begin{frame}
+  \vspace*{\stretch{1}} \LARGE \textbf{forecats}
+  \vspace*{\stretch{1}} \par
+\end{frame}
+\revert
+
+\begin{frame}
+  \frametitle{Demo}
+\end{frame}
+
+\invert
+\begin{frame}
+  \vspace*{\stretch{1}} \LARGE \textbf{codelist}
+  \vspace*{\stretch{1}} \par
+\end{frame}
+\revert
+
+\begin{frame}
+  \frametitle{codelist}
+  \begin{itemize}
+    \item \texttt{codelist} objects for code lists
+    \item \texttt{code} objects for vectors with code list
+    \item Has the following features:
+    \begin{itemize}
+      \item Codes + labels + descriptions
+      \item Hierarchies
+      \item Codes representing missing values
+      \item Multilingual labels and descriptions
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{codelist}
+  \begin{itemize}
+    \item Vector stores codes
+    \item Functions for `casting' codes to labels 
+    \item Functions for `casting' codes to codes higher in the hierarchy
+    \item Comparison and assignment operators
+  \end{itemize}
+\end{frame}
 
 \begin{frame}
   \frametitle{Demo}

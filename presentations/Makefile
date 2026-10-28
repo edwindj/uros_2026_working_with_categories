@@ -1,4 +1,4 @@
-DOC=01-introduction
+DOC=working_with_categorical_data
 
 
 ${DOC}.pdf: ${DOC}.tex
