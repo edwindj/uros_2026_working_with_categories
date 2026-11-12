@@ -34,7 +34,7 @@ git clone https://codeberg.org/CBS-ResearchAndDevelopment/uRos-2026-Workshop-Wor
 Otherwise, in codeberg on this page, you can click on the three dots above the 
 file list and select download as zip. 
 
-![Screenshot Codeberg](screenshotforreadme.png){width: 50%}
+![Screenshot Codeberg](screenshotforreadme.webp)
 
 ### Overview of the repository
 
