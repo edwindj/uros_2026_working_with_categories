@@ -18,10 +18,6 @@ dta <- read_spss("data/demodata.sav")
 
 
 
-# === SOLUTION
-table(as_factor(dta$educational_level1), useNA = "ifany")
-
-
 
 # =============================================================================
 # ==== EXERCISE 2B
@@ -39,29 +35,15 @@ table(as_factor(dta$educational_level1), useNA = "ifany")
 #      'Doctoral or equivalent level'
 
 
-# === SOLUTION
-
-low <- c("Early childhood education", "Primary education", "Lower secondary education")
-
-middle <- c("Upper secondary education", "Post-secondary non-tertiary education",
-  "Short-cycle tertiary education")
-
-high <- c("Bachelor's or equivalent level", "Master's or equivalent level",
-  "Doctoral or equivalent level")
-
-dta$educational_level3 <- factor(NA, levels = c("low", "middle", "high"))
-dta$educational_level3[as_factor(dta$educational_level1) %in% low] <- "low"
-dta$educational_level3[as_factor(dta$educational_level1) %in% middle] <- "middle"
-dta$educational_level3[as_factor(dta$educational_level1) %in% high] <- "high"
-
-# Always good to check
-# We should not have more or less missing values
-stopifnot(all(
-  is.na(dta$educational_level3) == is.na(dta$educational_level1)
-))
 
 
-# Visually inspect recoding
-table(dta$educational_level1, dta$educational_level3, useNA = "ifany")
-table(as_factor(dta$educational_level1), dta$educational_level3, useNA = "ifany")
+# =============================================================================
+# ==== EXERCISE 2C (OPTIONAL)
+# =============================================================================
+
+# Create a labelled from the column you created above:
+# A = low
+# B = middle
+# C = high
+
 
