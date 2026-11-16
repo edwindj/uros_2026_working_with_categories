@@ -40,6 +40,7 @@ table(x)
 # Comparison is done with the labels
 x == "a"
 x == "A"
+x == 1
 
 # A factor has class 'factor'
 class(x)
@@ -80,7 +81,7 @@ as.numeric(as.character(y))
 
 
 # =============================================================================
-# === Some thing to pay attention to
+# === Some things to pay attention to
 # =============================================================================
 
 x <- factor(c(1,1,2,3), levels = 1:3, labels = c("A", "B", "C"))
@@ -167,6 +168,11 @@ y[x == "A"] <- "AB"
 y[x == "B"] <- "AB"
 y[x == "C"] <- "C"
 y[x == "D"] <- "D"
+y
+
+# Option 4: levels() <- accepts list as right hand side (RHS)
+y <- x
+levels(y) <- list("AB" = c("A", "B"), "C" = "C", "D" = "D")
 y
 
 # =============================================================================

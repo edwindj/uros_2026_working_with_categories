@@ -67,6 +67,13 @@ stopifnot(all(
 # Visually inspect recoding
 table(dta$educational_level1, dta$educational_level3, useNA = "ifany")
 
+# === SOLUTION 2
+
+dta$educational_level3 <- dta$educational_level1
+levels(dta$educational_level3) <- list(
+  low = low, middle = middle, high = high)
+
+
 # =============================================================================
 # ==== EXERCISE 1C - BONUS
 # =============================================================================
