@@ -8,7 +8,7 @@ date: November 18 2026
 
 a)  Read the example dataset and the code list for `educational_level1`. The codes are read as character values so that codes such as `01` remain distinct from `1`.
 
-Convert `educational_level1` to a factor using the code-list labels, then count the observations at each level.
+Convert `educational_level1` to a factor using the code-list labels, then count the observations at each level using `table`.
 
 ```{r}
 dta <- read.csv("data/demodata.csv", na.strings = "", colClasses = "character")
@@ -58,7 +58,7 @@ stopifnot(all(
   is.na(dta$educational_level3) == is.na(dta$educational_level1)
 ))
 
-table(dta$educational_level1, dta$educational_level3, useNA = "ifany")
+table(level1 = dta$educational_level1, level3 = dta$educational_level3, useNA ="ifany")
 ```
 
 An alternative is to combine the factor levels directly:

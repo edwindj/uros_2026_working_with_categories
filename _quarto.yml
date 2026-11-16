@@ -6,7 +6,17 @@ format:
   typst:
     brand: _brand.yml
     logo:
-      width: 2cm
+      width: 1.5cm
       location: right-top
       padding-right: 0.5cm
       padding-top: 0.5cm
+    include-in-header:
+      text: |
+        #set page(
+          footer: context [
+            #set text(size: 9pt, fill: gray)
+            uRoS 2026, categorical variables
+            #h(1fr)
+            Page #counter(page).display("1 of 1", both: true)
+          ]
+        )
