@@ -1,0 +1,12 @@
+project:
+  output-dir: output
+
+
+format:
+  typst:
+    brand: _brand.yml
+    logo:
+      width: 2cm
+      location: right-top
+      padding-right: 0.5cm
+      padding-top: 0.5cm

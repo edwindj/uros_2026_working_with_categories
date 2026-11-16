@@ -1,0 +1,20 @@
+color:
+  palette:
+    black: "#1A1A1A"
+    purple: "#ce598e"
+
+logo:
+  images:
+    header:
+      path: ./logo.png
+  small: header
+  medium: header
+  large: header
+
+typography:
+  fonts:
+  - family: "Source Sans Pro"
+    source: google
+  base: "Source Sans Pro"
+  headings:
+    color: purple
