@@ -1,5 +1,7 @@
 ---
-title: "Solutions"
+subtitle: "Solutions"
+title: "Working with categorical variables in R"
+date: November 18 2026
 ---
 
 ### Exercise 1
