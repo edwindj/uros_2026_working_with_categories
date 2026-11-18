@@ -1,7 +1,6 @@
 
 library(haven)
 
-
 dta <- read_spss("data/demodata.sav")
 
 dta$educational_level1
@@ -99,11 +98,8 @@ labels <- seq_len(nlevels(iris$Species))
 names(labels) <- levels(iris$Species)
 iris$Species <- labelled(iris$Species, labels)
 
-
 lm(Sepal.Length ~ Species, data = iris) |> summary()
 # Species is used as integer!!
 
 # First convert to factor
 lm(Sepal.Length ~ as_factor(Species), data = iris) |> summary()
-
-

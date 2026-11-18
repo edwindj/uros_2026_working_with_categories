@@ -84,7 +84,6 @@ case_when(x == "A" ~ x, .default = factor("E", c(levels(x), "E")))
 
 # does not work, because "E" does not fit into x (replace_when keeps the levels of x)
 replace_when(x, x != "A" ~ factor("E", c(levels(x), "E")))
-
 # 3. Replacing/adding a new level without triggering an "invalid factor level" warning:
 x_expanded <- fct_expand(x, "E")
 x_expanded[1] <- "E"
@@ -148,7 +147,7 @@ x_ord >= "B"
 
 data(diamonds)
 diamonds |>
-  mutate(clarity = fct_infreq(clarity)) |>
+  mutate(clarity = fct_inorder(clarity)) |>
   ggplot(aes(x = clarity)) +
   geom_bar() +
   theme_minimal()
