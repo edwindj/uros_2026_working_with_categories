@@ -10,7 +10,6 @@ species
 class(species)
 
 # Reading data with readr (tidyverse)
-# read_csv() NEVER converts strings to factors by default (unlike old read.csv).
 # To get factors, you explicitly define them via col_types:
 write_csv(iris_tbl, "iris.csv")
 
@@ -61,15 +60,6 @@ nlevels(x)
 x <- fct_recode(x, "AA" = "A")
 x
 
-# Converting numeric-looking factors to actual numbers still requires
-# as.character() first, as forcats intentionally preserves base R type safety:
-y <- factor(c(10, 10, 5))
-as.numeric(as.character(y))
-
-# =============================================================================
-# === Pitfalls solved by tidyverse / forcats
-# =============================================================================
-x <- factor(c(1, 1, 2, 3), levels = 1:3, labels = c("A", "B", "C"))
 
 # 1. Combining factors safely:
 # Base R's c(x, factor("D")) coerces to integers!
@@ -134,7 +124,7 @@ y_other
 
 # Option C: Lump rare levels automatically (great for real-world messy data)
 fct_lump_n(x, n = 2) # Keeps top 2 most frequent levels, lumps the rest into "Other"
-
+x
 
 # =============================================================================
 # === Ordered factors & Contrasts

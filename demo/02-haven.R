@@ -6,6 +6,7 @@ dta <- read_spss("data/demodata.sav")
 dta$educational_level1
 
 class(dta$educational_level1)
+str(dta$educational_level1)
 
 # The codes and labels are stored in a named vector in the attribute
 # labels
@@ -29,7 +30,6 @@ as_factor(x)
 as_factor(x, levels = "labels")
 as_factor(x, levels = "values")
 as_factor(x, levels = "both")
-
 
 # It is possible to not label all categories; the not-labelled categories are
 # considered to be missing values. Software like SPSS allows for multiple types
