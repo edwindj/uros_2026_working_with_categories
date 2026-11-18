@@ -3,12 +3,15 @@
 % monitoren op het CBS); 43 is de klassieke verhouding die veel beamers nog
 % gebruiken.
 
+
 \usetheme{cbs}
 
 \title{Working with categorical data and \\code lists in R}
 \subtitle{Workshop at the uROS 2026}
 \author{Jan van der Laan (CBS) \url{<dj.vanderlaan@cbs.nl>}\\Edwin de Jonge (CBS) \url{<e.dejonge@cbs.nl>}}
 \date{November 2026}
+
+\newcommand{\rcode}[1]{\texttt{\footnotesize #1}}
 
 % De institute komt in de voet van de slides naast het nummer; normaal zou hier
 % niets moeten staan, maar je kan dit dus misbruiken om iets in de voet van
@@ -23,6 +26,12 @@
 \begin{frame}
   \titlepage
 \end{frame}
+
+\invert
+\begin{frame}
+ \frametitle{Introduction}
+\end{frame}
+\revert
 
 \begin{frame}
   \frametitle{Categorical variable}
@@ -130,10 +139,10 @@
   \frametitle{Programme}
   \begin{enumerate}
     \item Setting up
-    \item Base R: \texttt{factor}
-    \item SAS, SPSS, Stata: \texttt{haven}
-    \item \texttt{tidyverse:} \texttt{forecats}
-    \item Hierarchies and more: \texttt{codelist}
+    \item Base R: \rcode{factor}
+    \item SAS, SPSS, Stata: \rcode{haven::labelled}
+    \item \texttt{tidyverse:} \rcode{forcats}
+    \item Hierarchies and more: \rcode{codelist}
   \end{enumerate}
   Each time: demo + small assignment
 \end{frame}
@@ -155,7 +164,7 @@
         \item Following packages needed:
           \begin{itemize}
             \item \texttt{haven}
-            \item \texttt{forecats}
+            \item \texttt{forcats}
             \item \texttt{codelist}
           \end{itemize}
       \end{itemize}
@@ -176,8 +185,8 @@
         \item Material can be found at $\rightarrow$
         \item Following packages needed:
           \begin{itemize}
-            \item \texttt{haven}
-            \item \texttt{forecats}
+            \item \texttt{haven}  
+            \item \texttt{forcats}
             \item \texttt{codelist}
           \end{itemize}
       \end{itemize}
@@ -237,6 +246,10 @@
   \frametitle{Demo}
 \end{frame}
 
+\begin{frame}
+  \frametitle{Exercise 2}
+\end{frame}
+
 \invert
 \begin{frame}
   \vspace*{\stretch{1}} \LARGE \textbf{forcats}
@@ -245,7 +258,71 @@
 \revert
 
 \begin{frame}
+  \frametitle{
+	  \includegraphics[width=1cm]{images/forcats}~\texttt{forcats}  
+  }
+  \begin{itemize}
+    \item part of (core of) \texttt{tidyverse}
+    \item first argument is vector: optimized for pipe operator \texttt{|>} or \texttt{\%>\%}.
+    \item all functions start with \texttt{fct\_}
+    \item provides (simplified) versions of common operations, e.g. \texttt{fct\_inorder}, \texttt{fct\_lump}.
+  \end{itemize}
+
+\end{frame}
+
+
+% ----------------------------------------------------------------------
+% SLIDE 1: Creation, Inspection, and Reordering
+% ----------------------------------------------------------------------
+\begin{frame}[fragile]{Base R vs. \texttt{forcats}: Creation \& Reordering}
+  \centering
+  \footnotesize
+  \renewcommand{\arraystretch}{1.25}
+  \begin{tabular}{@{} l p{5.4cm} p{5.4cm} @{}}
+    \toprule
+    \textbf{Operation} & \textbf{Base R Approach} & \textbf{\texttt{forcats} Equivalent} \\
+    \midrule
+    Create / Coerce & \rcode{factor(x)} / \rcode{as.factor(x)}     & \rcode{as\_factor(x)} / \rcode{fct(x)} \\
+    Inspect Levels  & \rcode{levels(f)} / \rcode{table(f)}         & \rcode{fct\_count(f)} / \rcode{fct\_unique(f)} \\
+    Manual Reorder  & \rcode{factor(f, levels = c("a", "b", ...))} & \rcode{fct\_relevel(f, "a", "b")} \\
+    Move to Front   & \rcode{relevel(f, ref = "a")}                & \rcode{fct\_relevel(f, "a")} \\
+    Order by Frequency  & \rcode{factor(f, levels = names(sort(table(f), decreasing = TRUE)))} & \rcode{fct\_infreq(f)} \\
+    Order by Variable   & \rcode{reorder(f, x, FUN = median)}                                  & \rcode{fct\_reorder(f, x, .fun = median)} \\
+    Order by Appearance & \rcode{factor(f, levels = unique(f))}                                & \rcode{fct\_inorder(f)} \\
+    Reverse Order       & \rcode{factor(f, levels = rev(levels(f)))}                           & \rcode{fct\_rev(f)} \\
+    \bottomrule
+  \end{tabular}
+\end{frame}
+
+% ----------------------------------------------------------------------
+% SLIDE 2: Modifying, Grouping, and Combining Levels
+% ----------------------------------------------------------------------
+\begin{frame}[fragile]{Base R vs. \texttt{forcats}: Modifying \& Grouping Levels}
+  \centering
+  \footnotesize
+  \renewcommand{\arraystretch}{1.3}
+  \begin{tabular}{@{} l p{5.4cm} l @{}}
+    \toprule
+    \textbf{Operation} & \textbf{Base R Approach} & \textbf{\texttt{forcats} Equivalent} \\
+    \midrule
+    Rename / Recode & \rcode{levels(f)[levels(f) == "old"] <- "new"}         & \rcode{fct\_recode(f, new = "old")} \\
+    Collapse Levels & \rcode{levels(f) <- list(g1 = c("a", "b"), ...)}       & \rcode{fct\_collapse(f, g1 = c("a", "b"))} \\
+    Lump Rare Levels & \rcode{table()} + \rcode{ifelse()} + \rcode{factor()} & \rcode{fct\_lump\_n(f, n = 5)} \\
+    Drop Unused & \rcode{droplevels(f)} / \rcode{factor(f)}                  & \rcode{fct\_drop(f)} \\
+    Add Empty Levels & \rcode{factor(f, levels = c(levels(f), "new"))}       & \rcode{fct\_expand(f, "new")} \\
+    Explicit \texttt{NA} Level & \rcode{addNA(f)} / \rcode{factor(f, exclude = NULL)} & \rcode{fct\_na\_value\_to\_level(f, "(Missing)")} \\
+    Combine Factors & \rcode{factor(c(as.character(f1), as.character(f2)))}  & \rcode{fct\_c(f1, f2)} \\
+    \bottomrule
+  \end{tabular}
+\end{frame}
+
+
+\begin{frame}
   \frametitle{Demo}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Exercise 3}
 \end{frame}
 
 \invert
@@ -284,6 +361,10 @@
   \frametitle{Demo}
 \end{frame}
 
+\begin{frame}
+  \frametitle{Exercise 4}
+\end{frame}
+
 
 %\begin{frame}[fragile]{Voorbeeldslide met code}
 %  \begin{verbatim}
@@ -303,9 +384,12 @@
 %\end{frame}
 
 
-
+\invert
 \begin{frame}[plain]
+
+	Thank you for your attention!
 \end{frame}
+\revert
 
 \end{document}
 
