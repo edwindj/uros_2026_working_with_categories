@@ -168,6 +168,28 @@
   \end{columns}
 \end{frame}
 
+\begin{frame}
+  \frametitle{Setting up}
+  \begin{columns}
+    \begin{column}{0.4\textwidth}
+      \begin{itemize}
+        \item Material can be found at $\rightarrow$
+        \item Following packages needed:
+          \begin{itemize}
+            \item \texttt{haven}
+            \item \texttt{forecats}
+            \item \texttt{codelist}
+          \end{itemize}
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.6\textwidth}
+      \includegraphics[width=0.7\textwidth]{images/qrcode2.pdf}
+      \tiny
+      \url{https://github.com/edwindj/uros_2026_working_with_categories}
+    \end{column}
+  \end{columns}
+\end{frame}
+
 
 \invert
 \begin{frame}
@@ -178,13 +200,13 @@
 
 \begin{frame}
   \frametitle{Demo}
-\end{frame}
+\end{frame} 
 
 \begin{frame}
   \frametitle{factor in base R}
   \begin{itemize}
     \item[+] Default available; support
-    \item[-] Recoding is cumbersome.
+    \item[-] Recoding is (somewhat) cumbersome.
     \item[-] Either codes or labels not both. Or two columns.
   \end{itemize}
 \end{frame}
@@ -197,9 +219,11 @@
 \revert
 
 \begin{frame}
-\frametitle{\texttt{haven}}
+\frametitle{
+\includegraphics[width=1cm]{images/haven}~\texttt{haven}  
+}
 
-\texttt{haven}
+\texttt{haven}:
 \begin{itemize}
   \item lets you import data from SPSS, SAS and Stata
   \item \texttt{labelled}: annotated values or a (primitive) codelist
@@ -215,7 +239,7 @@
 
 \invert
 \begin{frame}
-  \vspace*{\stretch{1}} \LARGE \textbf{forecats}
+  \vspace*{\stretch{1}} \LARGE \textbf{forcats}
   \vspace*{\stretch{1}} \par
 \end{frame}
 \revert
