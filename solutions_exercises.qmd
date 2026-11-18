@@ -1,0 +1,424 @@
+---
+subtitle: "Solutions"
+title: "Working with categorical variables in R"
+date: November 18 2026
+---
+
+### Exercise 1
+
+a)  Read the example dataset and the code list for `educational_level1`. The codes are read as character values so that codes such as `01` remain distinct from `1`.
+
+Convert `educational_level1` to a factor using the code-list labels, then count the observations at each level using `table`.
+
+```{r}
+dta <- read.csv("data/demodata.csv", na.strings = "", colClasses = "character")
+
+isced <- read.csv(
+  "data/isced-main.csv",
+  na.strings = "",
+  colClasses = "character"
+)
+
+dta$educational_level1 <- factor(
+  dta$educational_level1,
+  levels = isced$code,
+  labels = isced$label
+)
+
+table(dta$educational_level1)
+```
+
+b)  Create a variable that groups educational levels into low, middle, and high categories. Check that the recoding has not changed which observations are missing, and inspect the resulting categories.
+
+```{r}
+low <- c(
+  "Early childhood education",
+  "Primary education",
+  "Lower secondary education"
+)
+
+middle <- c(
+  "Upper secondary education",
+  "Post-secondary non-tertiary education",
+  "Short-cycle tertiary education"
+)
+
+high <- c(
+  "Bachelor's or equivalent level",
+  "Master's or equivalent level",
+  "Doctoral or equivalent level"
+)
+
+dta$educational_level3 <- factor(NA, levels = c("low", "middle", "high"))
+dta$educational_level3[dta$educational_level1 %in% low] <- "low"
+dta$educational_level3[dta$educational_level1 %in% middle] <- "middle"
+dta$educational_level3[dta$educational_level1 %in% high] <- "high"
+
+stopifnot(all(
+  is.na(dta$educational_level3) == is.na(dta$educational_level1)
+))
+
+table(level1 = dta$educational_level1, level3 = dta$educational_level3, useNA ="ifany")
+```
+
+An alternative is to combine the factor levels directly:
+
+```{r}
+dta$educational_level3 <- dta$educational_level1
+levels(dta$educational_level3) <- list(
+  low = low,
+  middle = middle,
+  high = high
+)
+```
+
+c)  Fit a regression model predicting income from educational level, and set `middle` as the reference category. The first approach reorders the factor levels; the second supplies a custom contrasts function.
+
+```{r}
+m <- lm(income ~ educational_level3, data = dta)
+
+dta$educational_level3b <- relevel(dta$educational_level3, "middle")
+m <- lm(income ~ educational_level3b, data = dta)
+summary(m)
+```
+
+```{r}
+contrasts(dta$educational_level3) <- \(...) contr.treatment(base = 2, ...)
+m <- lm(income ~ educational_level3, data = dta)
+summary(m)
+```
+
+d)  Change the labels of the three educational-level categories to labels in another language. These examples use Dutch labels.
+
+```{r}
+dta$educational_level4 <- dta$educational_level3
+levels(dta$educational_level4) <- c("Laag", "Middelbaar", "Hoog")
+table(dta$educational_level4)
+```
+
+The same result can be obtained by specifying the original levels and new labels when creating the factor:
+
+```{r}
+dta$educational_level4 <- factor(
+  dta$educational_level3,
+  levels = c("low", "middle", "high"),
+  labels = c("Laag", "Middelbaar", "Hoog")
+)
+```
+
+### Exercise 2
+
+**a)** Read the SPSS dataset with `haven`, then count the educational levels using their value labels.
+
+```{r}
+library(haven)
+
+dta <- read_spss("data/demodata.sav")
+table(as_factor(dta$educational_level1), useNA = "ifany")
+```
+
+b)  Group the labelled educational levels into low, middle, and high categories. Check that the recoding preserves missing values and inspect the results both by code and by label.
+
+```{r}
+low <- c(
+  "Early childhood education",
+  "Primary education",
+  "Lower secondary education"
+)
+
+middle <- c(
+  "Upper secondary education",
+  "Post-secondary non-tertiary education",
+  "Short-cycle tertiary education"
+)
+
+high <- c(
+  "Bachelor's or equivalent level",
+  "Master's or equivalent level",
+  "Doctoral or equivalent level"
+)
+
+dta$educational_level3 <- factor(NA, levels = c("low", "middle", "high"))
+dta$educational_level3[as_factor(dta$educational_level1) %in% low] <- "low"
+dta$educational_level3[
+  as_factor(dta$educational_level1) %in% middle
+] <- "middle"
+dta$educational_level3[as_factor(dta$educational_level1) %in% high] <- "high"
+
+stopifnot(all(
+  is.na(dta$educational_level3) == is.na(dta$educational_level1)
+))
+
+table(dta$educational_level1, dta$educational_level3, useNA = "ifany")
+table(
+  as_factor(dta$educational_level1),
+  dta$educational_level3,
+  useNA = "ifany"
+)
+```
+
+c)  Optionally, create a labelled variable from the new category: `A` for low, `B` for middle, and `C` for high.
+
+```{r}
+dta$educational_level4 <- dta$educational_level3
+levels(dta$educational_level4) <- c("A", "B", "C")
+dta$educational_level4 <- as.character(dta$educational_level4)
+
+dta$educational_level4 <- labelled(
+  dta$educational_level4,
+  c("low" = "A", "middle" = "B", "high" = "C")
+)
+```
+
+### Exercise 3
+
+a)  Read the CSV data and code list with `readr`. The values are read as characters so codes such as `01` remain distinct from `1`. Convert `educational_level1` to a factor using the code-list labels, then count the levels.
+
+```{r}
+library(tidyverse)
+
+dta_fct <- read_csv("data/demodata.csv", col_types = "c", na = "")
+isced <- read_csv("data/isced-main.csv", na = "", col_types = "c")
+
+dta_fct <-
+  dta_fct |>
+  mutate(
+    educational_level1 = factor(
+      educational_level1,
+      levels = isced$code,
+      labels = isced$label
+    )
+  ) |>
+  glimpse()
+
+dta_fct |>
+  count(educational_level1)
+```
+
+b)  Group the educational levels into low, middle, and high categories. `fct_collapse()` combines existing factor levels; the alternative uses `case_when()` and then sets the category order explicitly. Check that the recoding preserves missing values and inspect the results.
+
+```{r}
+low <- c(
+  "Early childhood education",
+  "Primary education",
+  "Lower secondary education"
+)
+
+middle <- c(
+  "Upper secondary education",
+  "Post-secondary non-tertiary education",
+  "Short-cycle tertiary education"
+)
+
+high <- c(
+  "Bachelor's or equivalent level",
+  "Master's or equivalent level",
+  "Doctoral or equivalent level"
+)
+
+dta_fct <-
+  dta_fct |>
+  mutate(
+    educational_level3 = fct_collapse(
+      educational_level1,
+      low = low,
+      middle = middle,
+      high = high
+    )
+  ) |>
+  glimpse()
+```
+
+```{r}
+dta_fct |>
+  mutate(
+    educational_level3 = case_when(
+      educational_level1 %in% low ~ "low",
+      educational_level1 %in% middle ~ "middle",
+      educational_level1 %in% high ~ "high"
+    ) |>
+      fct(levels = c("low", "middle", "high"))
+  ) |>
+  glimpse()
+```
+
+```{r}
+stopifnot(all(
+  is.na(dta_fct$educational_level3) == is.na(dta_fct$educational_level1)
+))
+
+dta_fct |>
+  count(level1 = educational_level1, level3 = educational_level3)
+```
+
+c)  Create a bar chart showing the frequency of `educational_level1`.
+
+```{r}
+dta_fct |>
+  ggplot(aes(x = educational_level1)) +
+  geom_bar() +
+  coord_flip() +
+  theme_minimal()
+```
+
+d)  Use `fct_infreq()` to order the educational levels by frequency, then repeat the plot.
+
+```{r}
+dta_fct |>
+  mutate(educational_level1 = fct_infreq(educational_level1)) |>
+  ggplot(aes(x = educational_level1)) +
+  geom_bar() +
+  coord_flip() +
+  theme_minimal()
+```
+
+e)  Combine educational levels with fewer than five observations, then plot the result. (there is a function for that...)
+
+```{r}
+dta_fct |>
+  mutate(
+    educational_level1 = fct_lump_min(educational_level1, min = 5),
+    educational_level1 = fct_infreq(educational_level1)
+  ) |>
+  ggplot(aes(x = educational_level1)) +
+  geom_bar() +
+  coord_flip() +
+  theme_minimal()
+```
+
+f)  Fit a regression model predicting income from educational level, with `middle` as the reference category.
+
+```{r}
+m <- lm(income ~ educational_level3, data = dta_fct)
+
+dta_fct <-
+  dta_fct |>
+  mutate(educational_level3b = fct_relevel(educational_level3, "middle"))
+
+m <- lm(income ~ educational_level3b, data = dta_fct)
+summary(m)
+```
+
+g)  Change the labels of the low, middle, and high categories to labels in another language. These examples use Dutch labels and show two alternatives.
+
+Using `fct_recode`
+
+```{r}
+dta_fct <-
+  dta_fct |>
+  mutate(
+    educational_level4 = fct_recode(
+      educational_level3,
+      Laag = "low",
+      Middelbaar = "middle",
+      Hoog = "high"
+    )
+  ) |>
+  glimpse()
+
+dta_fct |> count(educational_level4)
+```
+
+Or using `recode_values`
+
+```{r}
+dta_fct <-
+  dta_fct |>
+  mutate(
+    educational_level4 = recode_values(
+      educational_level3,
+      "low" ~ "Laag",
+      "middle" ~ "Middelbaar",
+      "high" ~ "Hoog"
+    )
+  ) |>
+  glimpse()
+```
+
+```{r}
+dta_fct <-
+  dta_fct |>
+  mutate(
+    educational_level4 = recode_values(
+      educational_level3,
+      from = c("low", "middle", "high"),
+      to = c("Laag", "Middelbaar", "Hoog")
+    )
+  ) |>
+  glimpse()
+```
+
+### Exercise 4
+
+Read the CSV data and convert `income` to an integer. The existing `educational_level1` column is removed because it will be derived from the classification code list. Read the hierarchical code list for `educational_level2`.
+
+```{r}
+dta <- read.csv("data/demodata.csv", na.strings = "", colClasses = "character")
+dta$income <- as.integer(dta$income)
+
+dta$educational_level1 <- NULL
+
+isced <- read.csv(
+  "data/isced-hierarchical.csv",
+  na.strings = "",
+  colClasses = "character"
+)
+```
+
+a)  Use the `codelist` package to convert `educational_level2` to the `code` type.
+
+```{r}
+library(codelist)
+
+isced <- as.codelist(isced, parent = "parent")
+dta$educational_level2 <- code(dta$educational_level2, isced)
+```
+
+b)  Count the observations at each educational level, using the labels.
+
+```{r}
+table(labels(dta$educational_level2), useNA = "ifany")
+```
+
+c)  Count the observations at each top-level educational category, such as Early childhood education, Primary education, and Lower secondary education.
+
+```{r}
+levelcast(dta$educational_level2, 0) |> labels() |> table(useNA = "ifany")
+```
+
+d)  Create a low, middle, and high category from the top-level educational labels, and make the result a `code` value. Check that the recoding preserves missing values and inspect the resulting categories.
+
+```{r}
+low <- c(
+  "Early childhood education",
+  "Primary education",
+  "Lower secondary education"
+)
+
+middle <- c(
+  "Upper secondary education",
+  "Post-secondary non-tertiary education",
+  "Short-cycle tertiary education"
+)
+
+high <- c(
+  "Bachelor's or equivalent level",
+  "Master's or equivalent level",
+  "Doctoral or equivalent level"
+)
+
+cl2 <- codelist(codes = c("L", "M", "H"), labels = c("Low", "Middle", "High"))
+
+edulevel0 <- levelcast(dta$educational_level2, 0)
+
+dta$educational_level3 <- code(NA, cl2)
+dta$educational_level3[in_labels(edulevel0, low)] <- "L"
+dta$educational_level3[in_labels(edulevel0, middle)] <- "M"
+dta$educational_level3[in_labels(edulevel0, high)] <- "H"
+
+stopifnot(all(
+  is.na(dta$educational_level3) == is.na(dta$educational_level2)
+))
+
+table(labels(edulevel0), dta$educational_level3, useNA = "ifany")
+```
